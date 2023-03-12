@@ -1,4 +1,5 @@
-import {consultaById} from "../../utils/linkDAO"
+import { consultaById } from "../../utils/LinkDAO"
+
 
 export default async function handler(req, res){
 

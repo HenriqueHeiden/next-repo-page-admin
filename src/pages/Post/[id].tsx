@@ -1,4 +1,5 @@
 import { Box, Button, Divider, Flex, Heading, HStack, Icon, SimpleGrid, VStack, Input as InputChakra, Image, Text, Select } from "@chakra-ui/react";
+import Router from 'next/router';
 import { Header } from "../../components/Header";
 import { Sidebar } from "../../components/SideBar";
 import Head from 'next/head';
@@ -11,7 +12,7 @@ import { useEffect, useState } from "react";
 import Question from '../../components/Question';
 import Toast from "../../components/Toast";
 import { Loading } from "../../components/Progress";
-import { cadastro } from "../../utils/linkDAO";
+import { cadastro } from "../../utils/LinkDAO";
 import axios from "axios";
 
 export async function getServerSideProps(context) {
@@ -33,7 +34,8 @@ export async function getServerSideProps(context) {
     const teste = await axios(authOptions);
     return {
         props: {
-            dados: teste?.data
+            dados: teste?.data,
+            id: id
         }
     }
 }
@@ -47,16 +49,23 @@ export default function EditPost(props) {
 
     const [thumbnail_url, setThumbnail_url] = useState('');
     const [success, setSuccess] = useState(false);
-    const newPost = async (user, link, title, campoSelect) => {
+    const editarPost = async (user, link, title, campoSelect) => {
+
         let body = JSON.stringify({
+            id: props.id,
             email: user.email,
-            title: title,
-            link: link,
-            tipoLink: campoSelect});
+            customer: {
+                title: title,
+                link: link,
+                tipoLink: campoSelect
+            }
+        });
+
+        debugger
 
         var authOptions = {
             method: "post",
-            url: 'http://localhost:3000/api/cadastro',
+            url: 'http://localhost:3000/api/editarById',
             data: body,
             headers: {
                 "Content-Type": "application/json",
@@ -66,8 +75,7 @@ export default function EditPost(props) {
 
         axios(authOptions)
             .then((resp) => {
-                debugger
-                console.log("response :- ", resp);
+                Router.push('/Post');
             })
             .catch((error) => {
                 alert(error);
@@ -77,7 +85,7 @@ export default function EditPost(props) {
 
     useEffect(() => {
         debugger
-        if(props?.dados){
+        if (props?.dados) {
             setLink(props.dados[0].link);
             setCampoSelect(props.dados[0].tipoLink)
             setTitle(props.dados[0].title)
@@ -105,7 +113,7 @@ export default function EditPost(props) {
                 />
                 <title>Inicio | HMSHARE</title>
             </Head>
-            <Box>                
+            <Box>
                 <Header />
                 <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
                     <Sidebar />
@@ -187,7 +195,7 @@ export default function EditPost(props) {
                                     <Link href="/Post" passHref>
                                         <Button colorScheme="red">Cancelar</Button>
                                     </Link >
-                                    <Button colorScheme="cyan" onClick={() => newPost(
+                                    <Button colorScheme="cyan" onClick={() => editarPost(
                                         user,
                                         link,
                                         title,

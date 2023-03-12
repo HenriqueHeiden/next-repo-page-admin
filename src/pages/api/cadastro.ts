@@ -1,4 +1,5 @@
-import {cadastro} from "../../utils/linkDAO"
+import { cadastro } from "../../utils/linkDAO"
+
 
 export default async function handler(req, res){
 

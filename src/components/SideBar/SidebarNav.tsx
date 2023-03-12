@@ -10,6 +10,7 @@ export function SidebarNav() {
             <NavSection title="Geral">
                 <NavLink icon={RiAccountBoxFill} href={'/Post'}>Links</NavLink>
                 <NavLink icon={RiAccountBoxFill} href={'/Post/Create'}>Cadastrar novo link</NavLink>
+                <NavLink icon={RiAccountBoxFill} href={'/Post/Create'}>Analytics</NavLink>
             </NavSection>
         </Stack>
     );

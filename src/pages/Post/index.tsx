@@ -86,12 +86,6 @@ export default function PostLit(props) {
 
     }, [])
 
-    // useEffect(() => {
-    //     if (dados) {
-    //         debugger
-    //     }
-    // }, [dados])
-
     let permission = true;
 
     return (

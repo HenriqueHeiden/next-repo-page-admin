@@ -58,7 +58,7 @@ export const editar = async (email: string, Customer: any) => {
     return response    
 }
 
-export const editarById = async (id: string, Customer: any) => {
+export const editarById = async (id: string, email, Customer: any) => {
     const { db } = await connect()
     const user = {
         _id: new ObjectId(id)
@@ -66,8 +66,15 @@ export const editarById = async (id: string, Customer: any) => {
 
     const collection = db.collection('linktree')
 
+    const dados = {        
+        email: email,
+        title: Customer.title,
+		link: Customer.link,
+		tipoLink: Customer.tipoLink        
+    }
+
     // const {_id} = await collection.findOne(user)
-    const response = await collection.replaceOne({_id: user._id}, Customer);
+    const response = await collection.replaceOne({_id: user._id}, dados);
 
     return response    
 }
