@@ -1,4 +1,4 @@
-import {editar} from "../../utils/linkDAO"
+import { editar } from "../../utils/linkDAO"
 
 export default async function handler(req, res){
 
